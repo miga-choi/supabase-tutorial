@@ -46,11 +46,16 @@ class _MyHomePageState extends State<MyHomePage> {
     print(data);
   }
 
+  void insertData() async {
+    final data = await supabase.from("countries").insert({"name": "Japan"});
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: fetchData,
+        onPressed: insertData,
       ),
     );
   }
