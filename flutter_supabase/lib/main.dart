@@ -41,11 +41,16 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
+  void fetchData() async {
+    final data = await supabase.from("countries").select("name");
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: null,
+        onPressed: fetchData,
       ),
     );
   }
