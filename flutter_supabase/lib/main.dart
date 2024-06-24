@@ -57,11 +57,18 @@ class _MyHomePageState extends State<MyHomePage> {
     print(data);
   }
 
+  void upsertData() async {
+    final data = await supabase
+        .from("countries")
+        .upsert({"id": 1, "name": "Albania"}).select();
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: updateData,
+        onPressed: upsertData,
       ),
     );
   }
