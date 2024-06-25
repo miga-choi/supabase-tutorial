@@ -69,11 +69,16 @@ class _MyHomePageState extends State<MyHomePage> {
     print(data);
   }
 
+  void columnIsEqualToAValue() async {
+    final data = await supabase.from("countries").select().eq("name", "Japan");
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: deleteData,
+        onPressed: columnIsEqualToAValue,
       ),
     );
   }
