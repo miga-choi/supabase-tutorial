@@ -97,11 +97,16 @@ class _MyHomePageState extends State<MyHomePage> {
     print(data);
   }
 
+  void columnIsLessThanOrEqualToAValue() async {
+    final data = await supabase.from("countries").select().lte("id", 2);
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: columnIsLessThanAValue,
+        onPressed: columnIsLessThanOrEqualToAValue,
       ),
     );
   }
