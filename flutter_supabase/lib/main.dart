@@ -128,11 +128,19 @@ class _MyHomePageState extends State<MyHomePage> {
     print(data);
   }
 
+  void columnContainsEveryElementInAValue() async {
+    final data = await supabase
+        .from("issues")
+        .select()
+        .contains("tags", ["is:open", "priority:low"]);
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: columnIsInAnArray,
+        onPressed: columnContainsEveryElementInAValue,
       ),
     );
   }
