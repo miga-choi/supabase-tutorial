@@ -120,11 +120,19 @@ class _MyHomePageState extends State<MyHomePage> {
     print(data);
   }
 
+  void columnIsInAnArray() async {
+    final data = await supabase
+        .from("countries")
+        .select()
+        .inFilter("name", ["Korea", "Japan"]);
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: columnIsAValue,
+        onPressed: columnIsInAnArray,
       ),
     );
   }
