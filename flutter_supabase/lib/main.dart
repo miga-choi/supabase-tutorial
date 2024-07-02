@@ -152,11 +152,19 @@ class _MyHomePageState extends State<MyHomePage> {
     print(data);
   }
 
+  void greaterThanOrEqualToARange() async {
+    final data = await supabase
+        .from("reservations")
+        .select()
+        .rangeGte("during", "[2000-01-02 08:30, 2000-01-02 09:30)");
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: greaterThanARange,
+        onPressed: greaterThanOrEqualToARange,
       ),
     );
   }
