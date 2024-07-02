@@ -136,11 +136,19 @@ class _MyHomePageState extends State<MyHomePage> {
     print(data);
   }
 
+  void containedByValue() async {
+    final data = await supabase
+        .from("classes")
+        .select("name")
+        .containedBy("days", ["monday", "tuesday", "wednesday", "friday"]);
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: columnContainsEveryElementInAValue,
+        onPressed: containedByValue,
       ),
     );
   }
