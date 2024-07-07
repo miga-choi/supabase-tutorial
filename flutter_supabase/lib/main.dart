@@ -222,11 +222,19 @@ class _MyHomePageState extends State<MyHomePage> {
     print(data);
   }
 
+  void matchTheFilter() async {
+    final data = await supabase
+        .from("countries")
+        .select()
+        .filter("name", "in", "(\"Korea\",\"Japan\")");
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: matchAtLeastOneFilter,
+        onPressed: matchTheFilter,
       ),
     );
   }
