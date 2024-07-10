@@ -273,11 +273,20 @@ class _MyHomePageState extends State<MyHomePage> {
     print(data);
   }
 
+  void retrieveZeroOrOneRowOfData() async {
+    final Map<String, dynamic>? data = await supabase
+        .from("countries")
+        .select()
+        .eq("name", "Singapore")
+        .maybeSingle();
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: retrieveOneRowOfData,
+        onPressed: retrieveZeroOrOneRowOfData,
       ),
     );
   }
