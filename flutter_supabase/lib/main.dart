@@ -287,11 +287,16 @@ class _MyHomePageState extends State<MyHomePage> {
     print(data);
   }
 
+  void usingExplain() async {
+    final String data = await supabase.from("countries").select().explain();
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: retrieveAsACSV,
+        onPressed: usingExplain,
       ),
     );
   }
