@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    // listenToAuthEvents();
+    listenToAuthEvents();
   }
 
   void fetchData() async {
@@ -350,11 +350,21 @@ class _MyHomePageState extends State<MyHomePage> {
     print("{ session: ${session ?? "null"}, user: ${user ?? "null"} }");
   }
 
+  void signInAUser() async {
+    final AuthResponse res = await supabase.auth.signInWithPassword(
+      email: Config.email,
+      password: Config.password,
+    );
+    final Session? session = res.session;
+    final User? user = res.user;
+    print("{ session: ${session ?? "null"}, user: ${user ?? "null"} }");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: createAnAnonymousUser,
+        onPressed: signInAUser,
       ),
     );
   }
