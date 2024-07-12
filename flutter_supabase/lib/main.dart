@@ -292,11 +292,21 @@ class _MyHomePageState extends State<MyHomePage> {
     print(data);
   }
 
+  void createANewUser() async {
+    final AuthResponse res = await supabase.auth.signUp(
+      email: Config.email,
+      password: Config.password,
+    );
+    final Session? session = res.session;
+    final User? user = res.user;
+    print("{ session: ${session ?? "null"}, user: ${user ?? "null"} }");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: usingExplain,
+        onPressed: createANewUser,
       ),
     );
   }
