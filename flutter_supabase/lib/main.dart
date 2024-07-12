@@ -343,11 +343,18 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void createAnAnonymousUser() async {
+    final AuthResponse res = await supabase.auth.signInAnonymously();
+    final Session? session = res.session;
+    final User? user = res.user;
+    print("{ session: ${session ?? "null"}, user: ${user ?? "null"} }");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: createANewUser,
+        onPressed: createAnAnonymousUser,
       ),
     );
   }
