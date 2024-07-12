@@ -1,3 +1,5 @@
+import "dart:async";
+
 import "package:flutter/material.dart";
 import "package:flutter_supabase/Config.dart";
 import "package:supabase_flutter/supabase_flutter.dart";
@@ -39,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    // listenToAuthEvents();
   }
 
   void fetchData() async {
@@ -48,7 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void insertData() async {
-    final data = await supabase.from("countries").insert({"name": "Japan"});
+    final dynamic data =
+        await supabase.from("countries").insert({"name": "Japan"});
     print(data);
   }
 
@@ -300,6 +304,43 @@ class _MyHomePageState extends State<MyHomePage> {
     final Session? session = res.session;
     final User? user = res.user;
     print("{ session: ${session ?? "null"}, user: ${user ?? "null"} }");
+  }
+
+  void listenToAuthEvents() async {
+    final StreamSubscription<AuthState> authSubscription =
+        supabase.auth.onAuthStateChange.listen((AuthState data) {
+      final AuthChangeEvent event = data.event;
+      final Session? session = data.session;
+
+      print('event: $event, session: $session');
+
+      switch (event) {
+        case AuthChangeEvent.initialSession:
+          // handle initial session
+          print("AuthChangeEvent.initialSession");
+        case AuthChangeEvent.signedIn:
+          // handle signed in
+          print("AuthChangeEvent.signedIn");
+        case AuthChangeEvent.signedOut:
+          // handle signed out
+          print("AuthChangeEvent.signedOut");
+        case AuthChangeEvent.passwordRecovery:
+          // handle password recovery
+          print("AuthChangeEvent.passwordRecovery");
+        case AuthChangeEvent.tokenRefreshed:
+          // handle token refreshed
+          print("AuthChangeEvent.tokenRefreshed");
+        case AuthChangeEvent.userUpdated:
+          // handle user updated
+          print("AuthChangeEvent.userUpdated");
+        case AuthChangeEvent.userDeleted:
+          // handle user deleted
+          print("AuthChangeEvent.userDeleted");
+        case AuthChangeEvent.mfaChallengeVerified:
+          // handle mfa challenge verified
+          print("AuthChangeEvent.mfaChallengeVerified");
+      }
+    });
   }
 
   @override
