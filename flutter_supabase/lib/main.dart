@@ -2,6 +2,7 @@ import "dart:async";
 
 import "package:flutter/material.dart";
 import "package:flutter_supabase/Config.dart";
+import 'package:google_sign_in/google_sign_in.dart';
 import "package:supabase_flutter/supabase_flutter.dart";
 
 void main() async {
@@ -360,11 +361,43 @@ class _MyHomePageState extends State<MyHomePage> {
     print("{ session: ${session ?? "null"}, user: ${user ?? "null"} }");
   }
 
+  void signInWithIdToken() async {
+    const String webClientId = Config.webClientId;
+    const String iosClientId = Config.iosClientId;
+
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      clientId: iosClientId,
+      serverClientId: webClientId,
+    );
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser!.authentication;
+    final String? accessToken = googleAuth.accessToken;
+    final String? idToken = googleAuth.idToken;
+
+    if (accessToken == null) {
+      throw 'No Access Token found.';
+    }
+    if (idToken == null) {
+      throw 'No ID Token found.';
+    }
+
+    final AuthResponse response = await supabase.auth.signInWithIdToken(
+      provider: OAuthProvider.google,
+      idToken: idToken,
+      accessToken: accessToken,
+    );
+
+    final Session? session = response.session;
+    final User? user = response.user;
+    print("{ session: ${session ?? "null"}, user: ${user ?? "null"} }");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: signInAUser,
+        onPressed: signInWithIdToken,
       ),
     );
   }
