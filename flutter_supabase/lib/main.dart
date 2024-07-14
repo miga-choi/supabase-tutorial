@@ -1,5 +1,6 @@
 import "dart:async";
 
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_supabase/Config.dart";
 import 'package:google_sign_in/google_sign_in.dart';
@@ -393,11 +394,18 @@ class _MyHomePageState extends State<MyHomePage> {
     print("{ session: ${session ?? "null"}, user: ${user ?? "null"} }");
   }
 
+  void signInAUserThroughOTP() async {
+    await supabase.auth.signInWithOtp(
+      email: Config.email,
+      emailRedirectTo: kIsWeb ? null : Config.signInCallback,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: signInWithIdToken,
+        onPressed: signInAUserThroughOTP,
       ),
     );
   }
