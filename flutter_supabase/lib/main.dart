@@ -401,11 +401,17 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void signInAUserThroughOAuth() async {
+    final bool result =
+        await supabase.auth.signInWithOAuth(OAuthProvider.github);
+    print(result);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: signInAUserThroughOTP,
+        onPressed: signInAUserThroughOAuth,
       ),
     );
   }
