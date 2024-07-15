@@ -407,11 +407,18 @@ class _MyHomePageState extends State<MyHomePage> {
     print(result);
   }
 
+  void signInAUserThroughSSO() async {
+    final bool result = await supabase.auth.signInWithSSO(
+      domain: Config.domain,
+    );
+    print(result);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: signInAUserThroughOAuth,
+        onPressed: signInAUserThroughSSO,
       ),
     );
   }
