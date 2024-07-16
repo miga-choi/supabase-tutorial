@@ -414,11 +414,15 @@ class _MyHomePageState extends State<MyHomePage> {
     print(result);
   }
 
+  void signOutAUser() async {
+    await supabase.auth.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: signInAUserThroughSSO,
+        onPressed: signOutAUser,
       ),
     );
   }
