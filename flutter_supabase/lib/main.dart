@@ -418,11 +418,22 @@ class _MyHomePageState extends State<MyHomePage> {
     await supabase.auth.signOut();
   }
 
+  void verifyAndLogInThroughOTP() async {
+    final AuthResponse res = await supabase.auth.verifyOTP(
+      type: OtpType.signup,
+      token: Config.token,
+      phone: Config.phone,
+    );
+    final Session? session = res.session;
+    final User? user = res.user;
+    print("{ session: ${session ?? "null"}, user: ${user ?? "null"} }");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: signOutAUser,
+        onPressed: verifyAndLogInThroughOTP,
       ),
     );
   }
