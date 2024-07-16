@@ -434,11 +434,17 @@ class _MyHomePageState extends State<MyHomePage> {
     print("session: ${session ?? "null"}");
   }
 
+  void retrieveANewSession() async {
+    final AuthResponse res = await supabase.auth.refreshSession();
+    final Session? session = res.session;
+    print("session: ${session ?? "null"}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: retrieveASession,
+        onPressed: retrieveANewSession,
       ),
     );
   }
