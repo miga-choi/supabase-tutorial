@@ -445,11 +445,21 @@ class _MyHomePageState extends State<MyHomePage> {
     print("user: ${user ?? "null"}");
   }
 
+  void updateAUser() async {
+    final UserResponse res = await supabase.auth.updateUser(
+      UserAttributes(
+        email: Config.email,
+      ),
+    );
+    final User? updatedUser = res.user;
+    print("user: ${updatedUser ?? "null"}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: retrieveAUser,
+        onPressed: updateAUser,
       ),
     );
   }
