@@ -464,11 +464,16 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void linkAnIdentityToAUser() async {
+    final bool data = await supabase.auth.linkIdentity(OAuthProvider.google);
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: retrieveIdentitiesLinkedToAUser,
+        onPressed: linkAnIdentityToAUser,
       ),
     );
   }
