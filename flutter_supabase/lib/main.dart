@@ -455,11 +455,20 @@ class _MyHomePageState extends State<MyHomePage> {
     print("user: ${updatedUser ?? "null"}");
   }
 
+  void retrieveIdentitiesLinkedToAUser() async {
+    final List<UserIdentity> identities =
+        await supabase.auth.getUserIdentities();
+    for (UserIdentity identity in identities) {
+      print(
+          "{ identity.id: ${identity.id}, identity.identityId: ${identity.identityId}, identity.userId: ${identity.userId} }");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: updateAUser,
+        onPressed: retrieveIdentitiesLinkedToAUser,
       ),
     );
   }
