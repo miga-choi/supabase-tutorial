@@ -529,11 +529,23 @@ class _MyHomePageState extends State<MyHomePage> {
     print("{ res.id: ${res.id}, res.expiresAt: ${res.expiresAt} }");
   }
 
+  void verifyAChallenge() async {
+    final AuthMFAVerifyResponse res = await supabase.auth.mfa.verify(
+      factorId: Config.factorId,
+      challengeId: Config.challengeId,
+      code: Config.code,
+    );
+    print("res.user.id: ${res.user.id}");
+    print("res.user.email: ${res.user.email}");
+    print("res.accessToken: ${res.accessToken}");
+    print("res.refreshToken: ${res.refreshToken}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: createAChallenge,
+        onPressed: verifyAChallenge,
       ),
     );
   }
