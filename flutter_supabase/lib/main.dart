@@ -580,11 +580,17 @@ class _MyHomePageState extends State<MyHomePage> {
         SupabaseClient(Config.supabaseUrl, Config.serviceRoleKey);
   }
 
+  void adminRetrieveAUser() async {
+    final UserResponse res = await supabase.auth.admin.getUserById("userId");
+    final User? user = res.user;
+    print("user.id: ${user?.id ?? "null"}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: authAdmin,
+        onPressed: adminRetrieveAUser,
       ),
     );
   }
