@@ -596,11 +596,22 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void createAUser() async {
+    final UserResponse res =
+        await supabase.auth.admin.createUser(AdminUserAttributes(
+      email: Config.email,
+      password: Config.password,
+      userMetadata: {"name": "Yoda"},
+    ));
+    print("res.user.id: ${res.user?.id ?? "null"}");
+    print("res.user.email: ${res.user?.email ?? "null"}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: listAllUsers,
+        onPressed: createAUser,
       ),
     );
   }
