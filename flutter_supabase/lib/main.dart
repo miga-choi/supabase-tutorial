@@ -584,13 +584,23 @@ class _MyHomePageState extends State<MyHomePage> {
     final UserResponse res = await supabase.auth.admin.getUserById("userId");
     final User? user = res.user;
     print("user.id: ${user?.id ?? "null"}");
+    print("user.email: ${user?.email ?? "null"}");
+  }
+
+  void listAllUsers() async {
+    // Returns the first 50 users.
+    final List<User> users = await supabase.auth.admin.listUsers();
+    for (User user in users) {
+      print("user.id: ${user.id}");
+      print("user.email: ${user.email}");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: adminRetrieveAUser,
+        onPressed: listAllUsers,
       ),
     );
   }
