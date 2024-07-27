@@ -611,11 +611,19 @@ class _MyHomePageState extends State<MyHomePage> {
     await supabase.auth.admin.deleteUser(Config.userId);
   }
 
+  void sendAnEmailInviteLink() async {
+    final UserResponse res =
+        await supabase.auth.admin.inviteUserByEmail(Config.email);
+    final User? user = res.user;
+    print("res.user.id: ${res.user?.id ?? "null"}");
+    print("res.user.email: ${res.user?.email ?? "null"}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: deleteAUser,
+        onPressed: sendAnEmailInviteLink,
       ),
     );
   }
