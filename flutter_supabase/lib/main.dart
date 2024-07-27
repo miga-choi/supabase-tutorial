@@ -615,15 +615,25 @@ class _MyHomePageState extends State<MyHomePage> {
     final UserResponse res =
         await supabase.auth.admin.inviteUserByEmail(Config.email);
     final User? user = res.user;
-    print("res.user.id: ${res.user?.id ?? "null"}");
-    print("res.user.email: ${res.user?.email ?? "null"}");
+    print("user.id: ${user?.id ?? "null"}");
+    print("user.email: ${user?.email ?? "null"}");
+  }
+
+  void generateAnEmailLink() async {
+    final res = await supabase.auth.admin.generateLink(
+      type: GenerateLinkType.signup,
+      email: Config.email,
+      password: Config.password,
+    );
+    final String actionLink = res.properties.actionLink;
+    print("actionLink: $actionLink");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: sendAnEmailInviteLink,
+        onPressed: generateAnEmailLink,
       ),
     );
   }
