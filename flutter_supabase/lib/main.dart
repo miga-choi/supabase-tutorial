@@ -603,8 +603,9 @@ class _MyHomePageState extends State<MyHomePage> {
       password: Config.password,
       userMetadata: {"name": "Yoda"},
     ));
-    print("res.user.id: ${res.user?.id ?? "null"}");
-    print("res.user.email: ${res.user?.email ?? "null"}");
+    final User? user = res.user;
+    print("user.id: ${user?.id ?? "null"}");
+    print("user.email: ${user?.email ?? "null"}");
   }
 
   void deleteAUser() async {
@@ -629,11 +630,23 @@ class _MyHomePageState extends State<MyHomePage> {
     print("actionLink: $actionLink");
   }
 
+  void adminUpdateAUser() async {
+    final UserResponse userResponse = await supabase.auth.admin.updateUserById(
+      Config.userId,
+      attributes: AdminUserAttributes(
+        email: Config.email,
+      ),
+    );
+    final User? user = userResponse.user;
+    print("user.id: ${user?.id ?? "null"}");
+    print("user.email: ${user?.email ?? "null"}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: generateAnEmailLink,
+        onPressed: adminUpdateAUser,
       ),
     );
   }
