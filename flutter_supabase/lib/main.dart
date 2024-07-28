@@ -44,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     listenToAuthEvents();
+    listenToDatabaseChanges();
   }
 
   void fetchData() async {
@@ -647,6 +648,14 @@ class _MyHomePageState extends State<MyHomePage> {
         await supabase.functions.invoke("hello", body: {"foo": "baa"});
     final dynamic data = res.data;
     print(data);
+  }
+
+  void listenToDatabaseChanges() async {
+    supabase.from("countries").stream(primaryKey: ["id"]).listen(
+      (List<Map<String, dynamic>> data) {
+        print(data);
+      },
+    );
   }
 
   @override
