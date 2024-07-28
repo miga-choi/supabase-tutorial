@@ -642,11 +642,18 @@ class _MyHomePageState extends State<MyHomePage> {
     print("user.email: ${user?.email ?? "null"}");
   }
 
+  void invokesASupabaseEdgeFunction() async {
+    final FunctionResponse res =
+        await supabase.functions.invoke("hello", body: {"foo": "baa"});
+    final dynamic data = res.data;
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: adminUpdateAUser,
+        onPressed: invokesASupabaseEdgeFunction,
       ),
     );
   }
