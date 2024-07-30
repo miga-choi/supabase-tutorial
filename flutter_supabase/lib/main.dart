@@ -658,11 +658,29 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void subscribeToChannel() async {
+    final RealtimeChannel channel = supabase
+        .channel("public:countries")
+        .onPostgresChanges(
+            event: PostgresChangeEvent.all,
+            schema: "public",
+            table: "countries",
+            callback: (payload) {
+              print("Change received: ${payload.toString()}");
+            })
+        .onBroadcast(
+            event: "cursor-pos",
+            callback: (payload) {
+              print("Cursor position received!: $payload");
+            })
+        .subscribe();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: invokesASupabaseEdgeFunction,
+        onPressed: subscribeToChannel,
       ),
     );
   }
