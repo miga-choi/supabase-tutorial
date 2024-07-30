@@ -676,11 +676,17 @@ class _MyHomePageState extends State<MyHomePage> {
         .subscribe();
   }
 
+  void unsubscribeFromAChannel() async {
+    final RealtimeChannel channel = supabase.channel("public:countries");
+    final String status = await supabase.removeChannel(channel);
+    print("status: $status");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: subscribeToChannel,
+        onPressed: unsubscribeFromAChannel,
       ),
     );
   }
