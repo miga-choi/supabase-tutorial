@@ -719,11 +719,18 @@ class _MyHomePageState extends State<MyHomePage> {
     print("bucketId: ${bucket.id}");
   }
 
+  void listAllBuckets() async {
+    final List<Bucket> buckets = await supabase.storage.listBuckets();
+    for (Bucket bucket in buckets) {
+      print("bucketId: ${bucket.id}");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: retrieveABucket,
+        onPressed: listAllBuckets,
       ),
     );
   }
