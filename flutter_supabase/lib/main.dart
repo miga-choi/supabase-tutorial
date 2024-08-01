@@ -714,11 +714,16 @@ class _MyHomePageState extends State<MyHomePage> {
     print("bucketId: $bucketId");
   }
 
+  void retrieveABucket() async {
+    final Bucket bucket = await supabase.storage.getBucket('avatars');
+    print("bucketId: ${bucket.id}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: createABucket,
+        onPressed: retrieveABucket,
       ),
     );
   }
