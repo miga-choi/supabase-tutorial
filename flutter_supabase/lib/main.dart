@@ -709,11 +709,16 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void createABucket() async {
+    final String bucketId = await supabase.storage.createBucket('avatars');
+    print("bucketId: $bucketId");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: retrieveAllChannels,
+        onPressed: createABucket,
       ),
     );
   }
