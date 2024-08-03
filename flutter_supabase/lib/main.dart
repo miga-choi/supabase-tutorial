@@ -755,11 +755,17 @@ class _MyHomePageState extends State<MyHomePage> {
     print("fullPath: $fullPath");
   }
 
+  void downloadAFile() async {
+    final Uint8List file =
+        await supabase.storage.from("avatars").download("avatar1.png");
+    print(file);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: uploadAFile,
+        onPressed: downloadAFile,
       ),
     );
   }
