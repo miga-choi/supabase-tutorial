@@ -710,12 +710,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void createABucket() async {
-    final String bucketId = await supabase.storage.createBucket('avatars');
+    final String bucketId = await supabase.storage.createBucket("avatars");
     print("bucketId: $bucketId");
   }
 
   void retrieveABucket() async {
-    final Bucket bucket = await supabase.storage.getBucket('avatars');
+    final Bucket bucket = await supabase.storage.getBucket("avatars");
     print("bucketId: ${bucket.id}");
   }
 
@@ -728,14 +728,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void updateABucket() async {
     final String res = await supabase.storage.updateBucket(
-      'avatars',
+      "avatars",
       const BucketOptions(public: false),
     );
     print(res);
   }
 
   void deleteABucket() async {
-    final String res = await supabase.storage.deleteBucket('avatars');
+    final String res = await supabase.storage.deleteBucket("avatars");
+    print(res);
+  }
+
+  void emptyABucket() async {
+    final String res = await supabase.storage.emptyBucket("avatars");
     print(res);
   }
 
@@ -743,7 +748,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: deleteABucket,
+        onPressed: emptyABucket,
       ),
     );
   }
